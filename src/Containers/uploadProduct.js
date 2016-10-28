@@ -56,13 +56,14 @@ class LandingPage extends Component {
       beforeSend : function(xhr) {
         debugger
         if (sessionStorage.getItem('token')) {
-            debugger
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json")
+            xhr.setRequestHeader("Accept", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
             xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem('token'));
         }
       },
+      crossDomain: true,
       method: "POST",
+      // dataType: "json",
       url: "http://localhost:3000/api/v1/product",
       // dataType : 'jsonp',
       data: {
