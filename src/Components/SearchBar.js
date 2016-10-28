@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Router, Route, Link, browserHistory } from 'react-router'
+import { Router, Route, Link, browserHistory } from 'react-router';
+import '../css/SearchBar.css';
 
 
 
@@ -12,7 +13,9 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <input placeholder="Try to search a product."/>
+      <div className="searchBar">
+      <input className="searchBox" placeholder="   Search"/>
+      </div>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Router, Route, nk, browserHistory } from 'react-router'
+import { Router, Route, nk, browserHistory } from 'react-router';
+import '../css/FilterBar.css';
 
 
 
@@ -19,12 +20,13 @@ class FilterBar extends Component {
     }
     style.ulStyle["justify-content"] = 'space-around';
     return (
-      <div style={style.ulStyle}>
-        <div>Featured</div>
-        <div>Furniture</div>
-        <div>Office Supper</div>
-        <div>Books</div>
-        <div>Clothes</div>
+      <div className="filterContainer" style={style.ulStyle}>
+        <div className="filter">Featured</div>
+        <div className="filter">Furniture</div>
+        <div className="filter active">Office Supper</div>
+        <div className="filter">Books</div>
+        <div className="filter">Clothes</div>
+        <div className="filter">More</div>
       </div>
     );
   }
