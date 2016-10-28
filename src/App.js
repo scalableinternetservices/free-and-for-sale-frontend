@@ -3,6 +3,7 @@ import SignUpForm from './Components/Auth/SignUpForm';
 import SignInForm from './Components/Auth/SignInForm';
 import SignOutLink from './Components/Auth/SignOutLink';
 import LandingPage from './Containers/LandingPage';
+import UploadProduct from './Containers/uploadProduct';
 import { Router, Route, Link, browserHistory } from 'react-router'
 import logo from './logo.svg';
 import './App.css';
@@ -51,6 +52,7 @@ class App extends Component {
           <Route path="signin" component={SignInForm}/>
           <Route path="signout" component={SignOutLink}/>
           <Route path="signup" component={SignUpForm}/>
+          <Route path="uploadproduct" component={UploadProduct}/>
 
       </Router>
     );

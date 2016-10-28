@@ -1,0 +1,12 @@
+.inputGroup{
+  position: relative;
+  top: 200px;
+  left: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;;
+}
+
+input{
+  width: 300px;
+}

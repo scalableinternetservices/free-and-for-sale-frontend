@@ -4,6 +4,10 @@ var _              = require('lodash');
 var Functions      = require('../../util/Functions.js');
 var $              = require('jquery');
 
+
+import { browserHistory } from 'react-router';
+
+
 var SignUpForm =
   React.createClass({
     _handleInputChange: function(ev) {
@@ -27,31 +31,31 @@ var SignUpForm =
     _handleRegistrationClick: function(e) {
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/users.json",
+        url: "http://localhost:3000/api/v1/register_user",
         data: {
-          user: {
             email: this.state.email,
-            uid: this.state.email,
             password: this.state.password,
-            password_confirmation: this.state.password_confirmation,
-            name: this.state.name,
-            provider: "email"
-          },
-          authenticity_token: Functions.getMetaContent("csrf-token")
         }
       })
       .done(function(data){
-        location.reload();
+        // location.reload();
+        sessionStorage.setItem('token', data['data']['json']['auth_token']);
+        console.log(sessionStorage.getItem('token'), "=====>");
+        browserHistory.push('/uploadproduct');
+
       }.bind(this));
     },
     render:function(){
       return (
           <form style={{display :'flex'}}>
-              <input type='text'
-                name='name'
-                placeholder='name'
-                value={this.state.name}
-                onChange={this._handleInputChange} />
+            {
+              // <input type='text'
+              //   name='name'
+              //   placeholder='name'
+              //   value={this.state.name}
+              //   onChange={this._handleInputChange} />
+            }
+
 
               <input type='email'
                 name='email'
@@ -64,12 +68,13 @@ var SignUpForm =
                 placeholder='password'
                 value={this.state.password}
                 onChange={this._handleInputChange} />
-
-              <input type='password'
-                name='password_confirmation'
-                placeholder='re-type password'
-                value={this.state.password_confirmation}
-                onChange={this.handleInputChange} />
+              {
+              // <input type='password'
+              //   name='password_confirmation'
+              //   placeholder='re-type password'
+              //   value={this.state.password_confirmation}
+              //   onChange={this.handleInputChange} />
+            }
             <input onClick={this._handleRegistrationClick} defaultValue="sign up"/>
           </form>
       )
