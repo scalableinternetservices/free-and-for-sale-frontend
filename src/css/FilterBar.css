@@ -2,14 +2,14 @@
   border-bottom: solid 1px #e1e8ed;
   /*margin-top: 1.3%;*/
   width: 80%;
-  margin-left: 10%;
-  position: fixed;
-  top: 55px;
+  /*margin-left: 10%;*/
+  /*position: absolute;*/
+  /*top: 198px;*/
   left: 0;
   z-index: 9999;
   width: 100%;
   height: 50px;
-  background-color: rgba(255,255,255,0.93);
+  background-color: rgba(255,255,255,1);
 
 }
 

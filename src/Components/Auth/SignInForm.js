@@ -27,7 +27,7 @@ var SignInForm =
       console.log(Functions.getMetaContent("csrf-token"));
       $.ajax({
         method: "POST",
-        url: "http://localhost:3000/users/sign_in.json",
+        url: "http://35.162.98.109/users/sign_in.json",
         data: {
           user: {
             email: this.state.email,

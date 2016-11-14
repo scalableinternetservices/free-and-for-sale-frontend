@@ -6,6 +6,8 @@ var $              = require('jquery');
 
 
 import { browserHistory } from 'react-router';
+import {signup} from '../../Actions/UserAction';
+import { connect } from 'react-redux';
 
 
 var SignUpForm =
@@ -17,7 +19,7 @@ var SignUpForm =
       //Update the state of the component
       nextState[ev.target.name] = ev.target.value;
 
-      // Update the component's state with the new state
+
       this.setState(nextState);
     },
     getInitialState: function() {
@@ -28,23 +30,12 @@ var SignUpForm =
         name: ''
       };
     },
-    _handleRegistrationClick: function(e) {
-      $.ajax({
-        method: "POST",
-        url: "http://localhost:3000/api/v1/register_user",
-        data: {
-            email: this.state.email,
-            password: this.state.password,
-        }
-      })
-      .done(function(data){
-        // location.reload();
-        sessionStorage.setItem('token', data['data']['json']['auth_token']);
-        console.log(sessionStorage.getItem('token'), "=====>");
-        browserHistory.push('/uploadproduct');
 
-      }.bind(this));
+    _handleRegistrationClick: function(e) {
+      const { dispatch } = this.props;
+      dispatch (signup(this.state.email, this.state.password));
     },
+
     render:function(){
       return (
           <form style={{display :'flex'}}>
@@ -69,15 +60,13 @@ var SignUpForm =
                 value={this.state.password}
                 onChange={this._handleInputChange} />
               {
-              // <input type='password'
-              //   name='password_confirmation'
-              //   placeholder='re-type password'
               //   value={this.state.password_confirmation}
               //   onChange={this.handleInputChange} />
-            }
+              }
             <input onClick={this._handleRegistrationClick} defaultValue="sign up"/>
           </form>
       )
     }
   });
-module.exports = SignUpForm;
+
+export default connect(null, null)(SignUpForm);

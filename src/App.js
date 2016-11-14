@@ -5,9 +5,23 @@ import SignOutLink from './Components/Auth/SignOutLink';
 import LandingPage from './Containers/LandingPage';
 import UploadProduct from './Containers/uploadProduct';
 import { Router, Route, Link, browserHistory } from 'react-router'
-import logo from './logo.svg';
+
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+import rootReducer from './Reducers/index';
+import { Provider } from 'react-redux'
+
 import './App.css';
-var $            = require('jquery');
+var $ = require('jquery');
+
+
+const loggerMiddleware = createLogger();
+const Store = createStore(rootReducer,
+  applyMiddleware(
+      thunkMiddleware, // lets us dispatch() functions
+      loggerMiddleware // neat middleware that logs actions
+    ));
 
 
 class App extends Component {
@@ -31,30 +45,17 @@ class App extends Component {
     }
 
 
-
-    // <div className="App">
-    //   <div className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <h2>Welcome to React</h2>
-    //   </div>
-    //   <p className="App-intro">
-    //     To get started, edit <code>src/App.js</code> and save to reload.
-    //   </p>
-    //   <SignInForm />
-    //   <SignOutLink />
-    // </div>
-
   render() {
     return (
-      <Router history={browserHistory}>
-
-          <Route path="LandingPage" component={LandingPage}/>
-          <Route path="signin" component={SignInForm}/>
-          <Route path="signout" component={SignOutLink}/>
-          <Route path="signup" component={SignUpForm}/>
-          <Route path="uploadproduct" component={UploadProduct}/>
-
-      </Router>
+      <Provider store={Store}>
+        <Router history={browserHistory}>
+            <Route path="LandingPage" component={LandingPage}/>
+            <Route path="signin" component={SignInForm}/>
+            <Route path="signout" component={SignOutLink}/>
+            <Route path="signup" component={SignUpForm}/>
+            <Route path="uploadproduct" component={UploadProduct}/>
+        </Router>
+      </Provider>
     );
   }
 }

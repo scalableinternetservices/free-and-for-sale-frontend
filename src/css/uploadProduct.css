@@ -1,12 +1,115 @@
-.inputGroup{
-  position: relative;
-  top: 200px;
-  left: 600px;
+.postProduct{
+  /*position: relative;*/
+  /*top: 200px;
+  left: 600px;*/
+  /*display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;*/
+  margin-top: 18%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;;
+  justify-content: center;
+  align-items: center;
+
+
 }
 
+.productInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 500px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #3498db;
+  border-radius: 8px;
+}
+
+.productPhotos{
+  width: 100%;
+  flex: 33;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 3%;
+  padding-right: 3%;
+  border-bottom: solid #3498db 1px;
+  height: 60%;
+}
+
+.inputs{
+  display: flex;
+  flex-direction: column;
+  flex: 57;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input{
+  flex: 25;
+  width: 100%;
+  /*border-color: #3498db;
+  border-width: 0.01px;*/
+
+}
+
+.postButton{
+  flex:10;
+  width: 100%;
+  background-color: rgba(52, 152, 219,0.8);
+  color: white;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  flex: 30;
+}
+
+.photos{
+  display: flex;
+  flex: 70;
+  width: 100%;
+
+}
+
+.addPhoto{
+  width: 100px;
+  height: 100px;
+  border:#3498db solid 1.5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plusIcon{
+  color: #3498db;
+}
+
+.headerText{
+  width: 30%;
+  color: #3498db;
+}
+
+.closeIcon{
+  color: #3498db;
+  margin-top: 2.2%;
+}
+
+
+/*
 input{
   width: 300px;
-}
+}*/

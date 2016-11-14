@@ -1,28 +1,80 @@
-//react/components/auth/SignOutLink.js
-var React     = require('react');
-var $         = require('jquery');
-var Functions = require('../../util/Functions.js');
+// //react/components/auth/SignOutLink.js
+// var React     = require('react');
+// var $         = require('jquery');
+// var Functions = require('../../util/Functions.js');
+//
+// var SignOutLink =
+//   React.createClass({
+//     render:function(){
+//       return (
+//         <a href="#" onClick={this._signOut}>Sign out</a>
+//       )
+//     },
+//     _signOut: function(){
+//       $.ajax({
+//         method: "DELETE",
+//         url: "http://localhost:3000/users/sign_out.json",
+//         data: {
+//           authenticity_token: Functions.getMetaContent("csrf-token")
+//         }
+//       }).done(function(){
+//         location.reload();
+//       });
+//     }
+//   });
+// module.exports = SignOutLink;
 
-var SignOutLink =
-  React.createClass({
-    render:function(){
-      return (
-        <a href="#" onClick={this._signOut}>Sign out</a>
-      )
-    },
-    _signOut: function(){
-      $.ajax({
-        method: "DELETE",
-        url: "http://localhost:3000/users/sign_out.json",
-        data: {
-          authenticity_token: Functions.getMetaContent("csrf-token")
-        }
-      }).done(function(){
-        location.reload();
-      });
-    }
-  });
-module.exports = SignOutLink;
+
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import '../../css/signoutlink.css';
+import React, { Component } from 'react';
+
+class TodoList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {items: ['hello', 'world', 'click', 'me']};
+    this.handleAdd = this.handleAdd.bind(this);
+  }
+
+  handleAdd() {
+    const newItems = this.state.items.concat([
+      prompt('Enter some text')
+    ]);
+    this.setState({items: newItems});
+  }
+
+  handleRemove(i) {
+    // let newItems = this.state.items.slice();
+    // newItems.splice(i, 1);
+    // this.setState({items: newItems});
+    document.getElementById("hello").className += " MyClass";
+
+  }
+
+  render() {
+    const items = this.state.items.map((item, i) => (
+      <div className="item" id = {item}  key={item} onClick={() => this.handleRemove(i)}>
+        {item}
+      </div>
+    ));
+
+    return (
+      <div>
+        <button onClick={this.handleAdd}>Add Item</button>
+        <ReactCSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
+          {items}
+        </ReactCSSTransitionGroup>
+      </div>
+    );
+  }
+}
+
+module.exports = TodoList;
+
+
 
 
 // <div class="grid">

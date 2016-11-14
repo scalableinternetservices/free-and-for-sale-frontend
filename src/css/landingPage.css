@@ -1,11 +1,76 @@
-.cards
+/*.cards
 {
   width: 20%;
-  margin-bottom: 5%;
+  margin-bottom: 4%;
+
+  border-radius: 8px;
+  background-color: rgba(239,239,239,0.1);
+}*/
+
+body{
+
 }
 
-.cardsContainer
-{
-  left: 5%;
-  margin-top: 10%;
+
+
+.addProduct{
+  border-radius: 100%;
+  border-width: 0px !important;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 91%;
+  background-color: #3498db;
+  color: white;
+  position: fixed;
+  top:92%;
+  left:60px;
+  transition: all 1s;
+  opacity: 1
+}
+
+
+.moveDown{
+  padding-top: 120px;
+}
+/*.card-appear {
+  opacity: 0;
+}
+
+.card-appear.card-appear-active {
+  opacity: 1;
+  transition: opacity 1.5s ease;
+
+}
+
+.card-leave {
+  opacity: 1;
+  transition: opacity 100s linear;
+}
+
+.card-leave.card-leave-active {
+  opacity: 0;
+}*/
+
+
+button.addProduct:hover{
+  background-color: #2980b9;
+}
+
+.collapse{
+  display: none;
+}
+
+
+.fixed{
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.shrink{
+  height: 70px;
+  transition: height 1s;
 }
