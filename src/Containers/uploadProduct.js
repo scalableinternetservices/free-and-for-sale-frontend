@@ -13,45 +13,40 @@ import {serverAddress} from '../config';
 
 
 
-class LandingPage extends Component {
+class UploadProduct extends Component {
   constructor (props)
   {
     super(props);
     this.state = {
-      name:'',
-      description:'',
-      price: 0,
-      image :null
+      Product : {},
     };
-
   }
-
-  // handleImgInputChange(ev)
-  // {
-  //   this.setState({
-  //     imageURL : ev.target.value
-  //   })
-  // }
 
   handleNameInputChange(ev)
   {
     console.log(ev.target.value);
     this.setState({
-      name : ev.target.value
+      Product : Object.assign({}, this.state.Product, {name : ev.target.value})
     })
   }
 
   handleDescriptionInputChange(ev)
   {
     this.setState({
-      description : ev.target.value
+      Product : Object.assign({}, this.state.Product, {description : ev.target.value})
     })
   }
 
-  handleNumberInputChange(ev)
+  handlePriceInputChange(ev)
   {
     this.setState({
-      number : ev.target.value
+      Product : Object.assign({}, this.state.Product, {price : ev.target.value})
+    })
+  }
+
+  onDrop (files) {
+    this.setState({
+      Product : Object.assign({}, this.state.Product, {image : files} )
     })
   }
 
@@ -61,7 +56,6 @@ class LandingPage extends Component {
     canvas.width = imgElem.naturalWidth;
     canvas.height = imgElem.naturalHeight;
     var ctx = canvas.getContext("2d");
-    // ctx.scale(0.4,0.4);
     ctx.drawImage(imgElem, 0, 0);
     var dataURL = canvas.toDataURL("image/png", 0.5);
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
@@ -69,15 +63,13 @@ class LandingPage extends Component {
 
   productUpload()
   {
-    console.log(this.state.image,"!!!!!");
-
     request.post(serverAddress+'api/v1/product')
       .type('json')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('Accept', 'application/x-www-form-urlencoded')
       .set('Authorization', "Bearer " +  sessionStorage.getItem('token'))
       .send('{"name":"tj","description":"tobi", "price":"123"}')
-      .attach(this.state.image[0].name, this.state.image[0])
+      .attach(this.state.Product.image[0].name, this.state.Product.image[0])
       .end(function(){
         console.log("succeed!");
       })
@@ -91,59 +83,34 @@ class LandingPage extends Component {
         }
       },
       crossDomain: true,
-
-
       method: "POST",
-      // dataType: "json",
       url: serverAddress+"api/v1/product",
-      // dataType : 'jsonp',
-
       data: {
-          name: this.state.name,
-          description: this.state.description,
-          price:this.state.price,
+          name: this.state.Product.name,
+          description: this.state.Product.description,
+          price:this.state.Product.price,
           image:JSON.stringify(this.getBase64Image(document.getElementById('uploadedImg')))
       },
-
-      // console.log(sessionStorage.getItem('token'), "====>"
     })
     .done(function(data){
-      // location.reload()
       browserHistory.push('/landingPage');
-
     })
     .catch (function(error){
       console.log("error uploading the product error:", error);
     }.bind(this));
   }
 
-  onDrop (files) {
-    this.setState({
-      image : files
-    })
-  }
-
-  // <input
-  //  className="input"
-  //  type='string'
-  //  name='img_url'
-  //  placeholder='Describe your listings'
-  //  value={this.state.imageURL}
-  //  onChange = {this.handleImgInputChange.bind(this)}
-  // />
-
   renderImgPreview(){
-    if (this.state.image == null)
+    if (this.state.Product.image == null)
     {
       return (
         <i className="fa fa-plus fa-3x plusIcon" aria-hidden="true"></i>
       )
     }
-
     else
     {
       return (
-        <img id="uploadedImg" style={{width:"70px", height:"70px"}} src={this.state.image[0].preview} />
+        <img id="uploadedImg" style={{width:"70px", height:"70px"}} src={this.state.Product.image[0].preview} />
       )
     }
   }
@@ -176,7 +143,7 @@ class LandingPage extends Component {
                 type='string'
                 name='name'
                 placeholder='Write the name of your listing'
-                value = {this.state.name}
+                value = {this.state.Product.name}
                 onChange = {this.handleNameInputChange.bind(this)}
                />
               <input
@@ -184,20 +151,17 @@ class LandingPage extends Component {
                type='string'
                name='description'
                placeholder='Typr or select tags of your listing'
-               value = {this.state.description}
+               value = {this.state.Product.description}
                onChange = {this.handleDescriptionInputChange.bind(this)}
               />
-
               <input
                 className="input"
                 type='number'
                 name='price'
                 placeholder='Price'
-                value={this.state.price}
-                onChange = {this.handleNumberInputChange.bind(this)}
+                value={this.state.Product.price}
+                onChange = {this.handlePriceInputChange.bind(this)}
                />
-
-
             </div>
 
             <div className="postButton" onClick={this.productUpload.bind(this)}>
@@ -210,4 +174,4 @@ class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+export default UploadProduct;
