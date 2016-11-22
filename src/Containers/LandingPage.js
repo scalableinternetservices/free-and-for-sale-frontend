@@ -7,7 +7,9 @@ import Banner from '../Components/Banner';
 import { connect } from 'react-redux';
 import {fetchProducts, filterProducts} from '../Actions/productsAction';
 import SearchBar from '../Components/SearchBar';
+import UploadProduct from './uploadProduct';
 import '../css/landingPage.css';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 class LandingPage extends Component {
@@ -16,7 +18,8 @@ class LandingPage extends Component {
     super(props);
     this.state={
       shrinkBanner : false,
-      shrinked:false
+      shrinked:false,
+      showUploadProductModal:false
     }
   }
 
@@ -27,7 +30,10 @@ class LandingPage extends Component {
   }
 
   handleAddProductClick(){
-    browserHistory.push('/uploadproduct');
+    // browserHistory.push('/uploadproduct');
+    this.setState({
+      showUploadProductModal : true
+    })
   }
 
   shrinkBanner( ){
@@ -58,16 +64,34 @@ class LandingPage extends Component {
     }
   }
 
+  handleProductModalClose(){
+    this.setState({
+      showUploadProductModal : false
+    })
+  }
+
   render() {
     return (
       <div>
-        <div className={this.state.shrinkBanner ?  "fixed" : ""}>
-          <Banner className={this.state.shrinkBanner ?  "shrink" : ""} onSearchTermInput = {this.props.onSearchTermInput} />
-          <FilterBar  />
-        </div>
+        {this.state.showUploadProductModal ?
+          (<ReactCSSTransitionGroup
+            transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={1000}
+            transitionLeaveTimeout={1000}
+            >
+            <UploadProduct handleProductModalClose = {this.handleProductModalClose.bind(this)} />
+          </ReactCSSTransitionGroup>)
+          : "" }
+        <div className={"headerAndProduct " + (this.state.showUploadProductModal ? "headerAndProductBlur" : " ")}>
+          <div className={this.state.shrinkBanner ?  "fixed" : ""}>
+            <Banner className={this.state.shrinkBanner ?  "shrink" : ""} onSearchTermInput = {this.props.onSearchTermInput} />
+            <FilterBar  />
+          </div>
 
-        <CardsContainer className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
-        <button onClick={this.handleAddProductClick.bind(this)} className="addProduct"><i className="fa fa-plus" aria-hidden="true"></i></button>
+          <CardsContainer className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
+          <button onClick={this.handleAddProductClick.bind(this)} className="addProduct"><i className="fa fa-plus" aria-hidden="true"></i></button>
+        </div>
       </div>
     );
   }
@@ -75,7 +99,6 @@ class LandingPage extends Component {
 
 
 function mapStateToProps(state) {
-
    return {
      products : state.Products.products
    }

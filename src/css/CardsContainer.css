@@ -16,16 +16,15 @@
 .card-appear.card-appear-active {
   opacity: 1;
   transition: opacity 1.5s ease;
-
 }
 
 .card-leave {
-  opacity: 1;
-  transition: opacity 100s linear;
+
 }
 
 .card-leave.card-leave-active {
   opacity: 0;
+  transition: opacity 100s linear;
 }
 
 .cards

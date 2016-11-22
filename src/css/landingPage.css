@@ -12,6 +12,15 @@ body{
 }
 
 
+.headerAndProductBlur{
+  filter: blur(25px);
+  transition: all 1s;
+}
+
+.headerAndProduct{
+
+}
+
 
 .addProduct{
   border-radius: 100%;
@@ -73,4 +82,24 @@ button.addProduct:hover{
 .shrink{
   height: 70px;
   transition: height 1s;
+}
+
+.example-appear {
+  opacity: 0;
+
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+
+  transition: all 1s ease;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.3;
+  transition: opacity 1s linear;
 }

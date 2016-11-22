@@ -44,15 +44,15 @@ export function fetchProducts( ) {
 }
 
 
-export function WillUploadProduct( ){
+export function WillUploadProduct(){
   return {
     type : Will_Upload_Product
   }
 }
 
-export function uploadProduct(product, serverAddress, base64_img){
+export function uploadProduct(product, serverAddress, base64_img, callback){
   return function (dispatch){
-    dispatch(WillUploadProduct);
+    dispatch(WillUploadProduct())
     $.ajax({
       beforeSend : function(xhr) {
         // debugger
@@ -73,8 +73,10 @@ export function uploadProduct(product, serverAddress, base64_img){
       },
     })
     .done(function(data){
-      dispatch(DidUploadProduct);
-      browserHistory.push('/landingPage');
+      dispatch(DidUploadProduct());
+      // browserHistory.push('/landingPage');
+      callback();
+
     })
     .catch (function(error){
       console.log("error uploading the product error:", error);

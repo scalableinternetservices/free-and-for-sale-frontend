@@ -19,6 +19,7 @@ export default function Products (state = [], action ){
       })
 
     case Will_Upload_Product:
+      debugger;
       return Object.assign({}, state, {
         isUploading: true
       })

@@ -20,6 +20,14 @@ class UploadProduct extends Component {
     };
   }
 
+  componentWillUnmount() {
+    window.setTimeout(function(){
+      document.getElementsByClassName('postProduct')[0].classList.add('fadeOut');
+    }, 100)
+    document.getElementsByClassName('postProduct')[0].classList.add('fadeOut');
+  }
+
+
   handleNameInputChange(ev)
   {
     console.log(ev.target.value);
@@ -79,22 +87,18 @@ class UploadProduct extends Component {
   }
 
   onProductSubmit(){
-    this.props.dispatch(uploadProduct(this.state.Product, serverAddress, this.getStringOfBase64Image()) );
+    this.props.dispatch(uploadProduct(this.state.Product, serverAddress, this.getStringOfBase64Image(), this.props.handleProductModalClose) );
   }
 
   render() {
     return (
-      <div>
-        <Banner  />
-        {/*<Header />*/}
-        <FilterBar />
         <div className="postProduct">
           <div className="productInfo">
 
             <div className="productPhotos">
               <div className="header">
                 <div className="headerText"><h4>Item Photos.</h4></div>
-                <i className="fa fa-times fa-lg closeIcon" aria-hidden="true"></i>
+                <i className="fa fa-times fa-lg closeIcon" aria-hidden="true" onClick={this.props.handleProductModalClose}></i>
               </div>
               <div className="photos">
                 <Dropzone className="addPhoto" onDrop={this.onDrop.bind(this)}>
@@ -133,13 +137,19 @@ class UploadProduct extends Component {
 
             <div className="postButton" onClick={this.onProductSubmit.bind(this)}>
               Post !
+              {this.props.isUploading? <i className="fa fa-spinner spinning" aria-hidden="true"></i> : "" }
             </div>
         </div>
         </div>
-      </div>
     );
   }
 }
 
+function mapStateToProps(state) {
 
-export default connect(null, null)(UploadProduct);
+   return {
+     isUploading  : state.Products.isUploading
+   }
+}
+
+export default connect(mapStateToProps, null)(UploadProduct);
