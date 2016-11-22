@@ -3,15 +3,13 @@ import { Router, Route, Link, browserHistory } from 'react-router'
 import Banner from '../Components/Banner';
 import FilterBar from '../Components/FilterBar';
 import Dropzone from 'react-dropzone';
-import $ from 'jquery';
-import request from 'superagent';
 // import {base64} from 'base-64';
 var base64 = require('base-64');
 import '../css/uploadProduct.css';
 import '../css/font-awesome/css/font-awesome.css';
 import {serverAddress} from '../config';
-
-
+import { connect } from 'react-redux';
+import {uploadProduct} from '../Actions/productsAction';
 
 class UploadProduct extends Component {
   constructor (props)
@@ -61,43 +59,8 @@ class UploadProduct extends Component {
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }
 
-  productUpload()
-  {
-    request.post(serverAddress+'api/v1/product')
-      .type('json')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
-      .set('Accept', 'application/x-www-form-urlencoded')
-      .set('Authorization', "Bearer " +  sessionStorage.getItem('token'))
-      .send('{"name":"tj","description":"tobi", "price":"123"}')
-      .attach(this.state.Product.image[0].name, this.state.Product.image[0])
-      .end(function(){
-        console.log("succeed!");
-      })
-    $.ajax({
-      beforeSend : function(xhr) {
-        // debugger
-        if (sessionStorage.getItem('token')) {
-            xhr.setRequestHeader("Accept", "application/x-www-form-urlencoded");
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-            xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem('token'));
-        }
-      },
-      crossDomain: true,
-      method: "POST",
-      url: serverAddress+"api/v1/product",
-      data: {
-          name: this.state.Product.name,
-          description: this.state.Product.description,
-          price:this.state.Product.price,
-          image:JSON.stringify(this.getBase64Image(document.getElementById('uploadedImg')))
-      },
-    })
-    .done(function(data){
-      browserHistory.push('/landingPage');
-    })
-    .catch (function(error){
-      console.log("error uploading the product error:", error);
-    }.bind(this));
+  getStringOfBase64Image(){
+    return JSON.stringify(this.getBase64Image(document.getElementById('uploadedImg')));
   }
 
   renderImgPreview(){
@@ -110,9 +73,13 @@ class UploadProduct extends Component {
     else
     {
       return (
-        <img id="uploadedImg" style={{width:"70px", height:"70px"}} src={this.state.Product.image[0].preview} />
+        <img id="uploadedImg" style={{width:"100px", height:"100px", "border-radius":"5px"}} src={this.state.Product.image[0].preview} />
       )
     }
+  }
+
+  onProductSubmit(){
+    this.props.dispatch(uploadProduct(this.state.Product, serverAddress, this.getStringOfBase64Image()) );
   }
 
   render() {
@@ -164,7 +131,7 @@ class UploadProduct extends Component {
                />
             </div>
 
-            <div className="postButton" onClick={this.productUpload.bind(this)}>
+            <div className="postButton" onClick={this.onProductSubmit.bind(this)}>
               Post !
             </div>
         </div>
@@ -174,4 +141,5 @@ class UploadProduct extends Component {
   }
 }
 
-export default UploadProduct;
+
+export default connect(null, null)(UploadProduct);

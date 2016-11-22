@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {serverAddress} from '../config';
+import { browserHistory } from 'react-router';
+import $ from 'jquery';
 
 export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
@@ -48,10 +50,35 @@ export function WillUploadProduct( ){
   }
 }
 
-export function UploadProduct( ){
+export function uploadProduct(product, serverAddress, base64_img){
   return function (dispatch){
     dispatch(WillUploadProduct);
-
+    $.ajax({
+      beforeSend : function(xhr) {
+        // debugger
+        if (sessionStorage.getItem('token')) {
+            xhr.setRequestHeader("Accept", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+            xhr.setRequestHeader("Authorization", "Bearer " +  sessionStorage.getItem('token'));
+        }
+      },
+      crossDomain: true,
+      method: "POST",
+      url: serverAddress+"api/v1/product",
+      data: {
+          name: product.name,
+          description: product.description,
+          price:product.price,
+          image:base64_img
+      },
+    })
+    .done(function(data){
+      dispatch(DidUploadProduct);
+      browserHistory.push('/landingPage');
+    })
+    .catch (function(error){
+      console.log("error uploading the product error:", error);
+    }.bind(this));
   }
 }
 

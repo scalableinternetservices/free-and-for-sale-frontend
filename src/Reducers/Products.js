@@ -1,4 +1,4 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS} from '../Actions/productsAction';
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product} from '../Actions/productsAction';
 
 export default function Products (state = [], action ){
   switch (action.type) {
@@ -16,6 +16,16 @@ export default function Products (state = [], action ){
         products: action.products,
         initialProducts:action.products
 
+      })
+
+    case Will_Upload_Product:
+      return Object.assign({}, state, {
+        isUploading: true
+      })
+
+    case Did_Upload_Product:
+      return Object.assign({}, state, {
+        isUploading : false
       })
 
     case FILTER_PRODUCTS:
