@@ -33,18 +33,6 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
-      $.ajax({
-        method: "GET",
-        url: "http://localhost:3000/auth/is_signed_in.json"
-      })
-      .done(function(data){
-        this.setState({ signedIn: data.signed_in });
-        console.log(data.signed_in);
-      }.bind(this));
-    }
-
-
   render() {
     return (
       <Provider store={Store}>
