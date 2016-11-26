@@ -1,7 +1,7 @@
-import { REQUEST_SIGNUP, RECEIVE_SIGNUP} from '../Actions/UserAction';
+import { REQUEST_SIGNUP, RECEIVE_SIGNUP, LOG_OUT} from '../Actions/UserAction';
 import { browserHistory } from 'react-router';
 
-export default function Users (state = {}, action){
+export default function Users (state = {is_signed_in : sessionStorage.getItem('token')}, action){
   switch (action.type) {
     case REQUEST_SIGNUP:
       return Object.assign({}, state, {
@@ -10,10 +10,16 @@ export default function Users (state = {}, action){
       })
 
     case RECEIVE_SIGNUP:
-      browserHistory.push('/uploadproduct');
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
+        is_signed_in : true
+      })
+
+    case LOG_OUT:
+      sessionStorage.setItem('token', '')
+      return Object.assign({}, state, {
+        is_signed_in : sessionStorage.getItem('token')
       })
 
     default:

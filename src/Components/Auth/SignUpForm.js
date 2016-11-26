@@ -8,6 +8,8 @@ var $              = require('jquery');
 import { browserHistory } from 'react-router';
 import {signup} from '../../Actions/UserAction';
 import { connect } from 'react-redux';
+import Modal from '../Modal';
+import '../../css/Auth/signupForm.css';
 
 
 var SignUpForm =
@@ -32,21 +34,15 @@ var SignUpForm =
     },
 
     _handleRegistrationClick: function(e) {
+      e.preventDefault();
       const { dispatch } = this.props;
-      dispatch (signup(this.state.email, this.state.password));
+      dispatch (signup(this.state.email, this.state.password, this.props.onSucessSignUp));
     },
 
     render:function(){
       return (
-          <form style={{display :'flex'}}>
-            {
-              // <input type='text'
-              //   name='name'
-              //   placeholder='name'
-              //   value={this.state.name}
-              //   onChange={this._handleInputChange} />
-            }
-
+        <Modal onModalClose={this.props.onModalClose}  showModal={this.props.showModal}  className="signupForm-Modal">
+          <form className="signupForm-formContainer">
 
               <input type='email'
                 name='email'
@@ -59,14 +55,17 @@ var SignUpForm =
                 placeholder='password'
                 value={this.state.password}
                 onChange={this._handleInputChange} />
-              {
-              //   value={this.state.password_confirmation}
-              //   onChange={this.handleInputChange} />
-              }
-            <input onClick={this._handleRegistrationClick} defaultValue="sign up"/>
+
+              <button className="signupForm-formContainer-signupButton" onClick={this._handleRegistrationClick}>
+                Sign Up
+              </button>
           </form>
+        </Modal>
       )
     }
   });
+
+
+
 
 export default connect(null, null)(SignUpForm);

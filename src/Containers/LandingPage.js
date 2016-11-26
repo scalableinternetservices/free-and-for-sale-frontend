@@ -2,15 +2,23 @@ import React, { Component } from 'react';
 import { Router, Route, Link, browserHistory } from 'react-router'
 import Header from '../Components/header';
 import FilterBar from '../Components/FilterBar';
+import Modal from '../Components/Modal';
+
 import CardsContainer from '../Components/CardsContainer';
 import Banner from '../Components/Banner';
 import { connect } from 'react-redux';
 import {fetchProducts, filterProducts} from '../Actions/productsAction';
+import {logOut} from '../Actions/UserAction';
 import SearchBar from '../Components/SearchBar';
 import UploadProduct from './uploadProduct';
+import ProductDetail from '../Components/ProductDetail';
 import '../css/landingPage.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import SignUpModal from '../Components/Auth/SignUpForm';
 
+/*
+  is_signed_in : bool
+*/
 
 class LandingPage extends Component {
   constructor (props)
@@ -19,7 +27,8 @@ class LandingPage extends Component {
     this.state={
       shrinkBanner : false,
       shrinked:false,
-      showUploadProductModal:false
+      showUploadProductModal:false,
+      showSignUpModal : false
     }
   }
 
@@ -31,9 +40,19 @@ class LandingPage extends Component {
 
   handleAddProductClick(){
     // browserHistory.push('/uploadproduct');
-    this.setState({
-      showUploadProductModal : true
-    })
+    if (this.props.user.is_signed_in)
+    {
+      this.setState({
+        showUploadProductModal : true
+      })
+    }
+
+    else
+    {
+      this.setState({
+        showSignUpModal : true
+      })
+    }
   }
 
   shrinkBanner( ){
@@ -70,9 +89,29 @@ class LandingPage extends Component {
     })
   }
 
+  onModalClose(){
+    this.setState({
+      showSignUpModal : false
+    })
+  }
+
+  onSignUpClick(){
+    this.setState({
+      showSignUpModal : true
+    })
+  }
+
+  onSucessSignUp(){
+    this.setState({
+      showSignUpModal:false
+    })
+  }
+
   render() {
     return (
       <div>
+        <SignUpModal onSucessSignUp={this.onSucessSignUp.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.props.user.is_signed_in ? false : this.state.showSignUpModal} className=""/>
+
         {this.state.showUploadProductModal ?
           (<ReactCSSTransitionGroup
             transitionName="example"
@@ -85,11 +124,11 @@ class LandingPage extends Component {
           : "" }
         <div className={"headerAndProduct " + (this.state.showUploadProductModal ? "headerAndProductBlur" : " ")}>
           <div className={this.state.shrinkBanner ?  "fixed" : ""}>
-            <Banner className={this.state.shrinkBanner ?  "shrink" : ""} onSearchTermInput = {this.props.onSearchTermInput} />
+            <Banner  onLogOutClick = {this.props.signOut} is_signed_in={this.props.user.is_signed_in} onSignUpClick={this.onSignUpClick.bind(this)} className={this.state.shrinkBanner ?  "shrink" : ""} onSearchTermInput = {this.props.onSearchTermInput} />
             <FilterBar  />
           </div>
 
-          <CardsContainer className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
+          <CardsContainer  className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
           <button onClick={this.handleAddProductClick.bind(this)} className="addProduct"><i className="fa fa-plus" aria-hidden="true"></i></button>
         </div>
       </div>
@@ -100,15 +139,19 @@ class LandingPage extends Component {
 
 function mapStateToProps(state) {
    return {
-     products : state.Products.products
+     products : state.Products.products,
+     user : state.Users
    }
 }
 
 function mapDispatchToProps(dispatch){
   return {
     onSearchTermInput: (searchTerm) => {
-      console.log("**************");
       dispatch(filterProducts(searchTerm))
+    },
+
+    signOut:()=>{
+      dispatch(logOut());
     },
 
     dispatch

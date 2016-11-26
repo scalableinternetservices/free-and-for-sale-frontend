@@ -1,5 +1,5 @@
-.cardContainer{
-  
+.cardContainer:hover{
+  cursor: zoom-in;
 }
 
 .productImg{

@@ -12,7 +12,8 @@ class Modal extends Component{
     if (nextProps.showModal)
     {
       // document.getElementsByClassName('modal-body')[0].className = "modal-body modal-background"
-        console.log(document.getElementsByClassName('modal-body')[0].parentNode.parentNode.className += " blurContainer" );
+        //document.getElementsByClassName('modal-body')[0].parentNode.className += " blurContainer" ;
+       //window.onwheel = (e)=>{e.preventDefault()};
 
     }
   }
@@ -21,16 +22,18 @@ class Modal extends Component{
     if (this.props.showModal)
     {
       return (
-        <div className="modal-background">
-          <i className="fa fa-4x fa-times close-icon" aria-hidden="true"></i>
+        <div className="modal-background ">
+          <div className={"modal-container "+this.props.className}>
+            <i onClick={this.props.onModalClose} className="fa fa-times fa-2x modal-closeIcon" aria-hidden="true"></i>
+            {this.props.children}
+          </div>
         </div>
       )
     }
     else
     {
         return(
-          <div className="modal-body modal-default">
-            <i className="fa fa-4x fa-times close-icon" aria-hidden="true"></i>
+          <div>
           </div>
         )
     }

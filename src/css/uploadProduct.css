@@ -1,12 +1,4 @@
 .postProduct{
-  /*position: relative;*/
-  /*top: 200px;
-  left: 600px;*/
-  /*display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%;*/
-  /*margin-top: 10%;*/
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,13 +49,12 @@
 .input{
   flex: 25;
   width: 100%;
-  /*border-color: #3498db;
-  border-width: 0.01px;*/
   background-color: rgba(255, 0, 0, 0);
   border-width: 0px;
   border-bottom: 1px #3498db solid;
   padding: 15px;
   font-size: 20px;
+  color: #3498db
 
 }
 
@@ -106,6 +97,7 @@
 
 .addPhoto:hover{
   box-shadow: 4px 4px 4px #3498db;
+  cursor: grab;
 }
 
 .plusIcon{
@@ -122,6 +114,10 @@
   margin-top: 2.2%;
 }
 
+.closeIcon:hover{
+  cursor: pointer;
+}
+
 .spinning {
     animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;
@@ -136,9 +132,3 @@
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(360deg); }
 }
-
-
-/*
-input{
-  width: 300px;
-}*/

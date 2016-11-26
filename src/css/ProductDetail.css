@@ -1,0 +1,141 @@
+.product-modal-background{
+  width: 100vw;
+  height:100vh;
+  background-color: rgba(0,0,0,0.9);
+  position: fixed;
+  top:0px;
+  left:0px;
+  z-index: 100000;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-modal-container{
+  width: 50vw;
+  height: 45vh;
+  border: 1px black solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
+
+.product-profile{
+  flex: 45;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-description{
+  flex:55;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-profile-picture{
+  /*border: 1px black solid;*/
+  flex:70;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.product-profile-picture img{
+  width: 80%;
+  max-height:24vh;
+  border-radius: 7px;
+}
+
+.product-profile-user{
+  flex: 30;
+  /*border:1px solid black;*/
+  display: flex;
+  flex-direction: row;
+  /*justify-content: center;*/
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.product-profile-user-desciption p{
+  font-size: 18px;
+  color: #3498db;
+}
+
+.product-profile-user-avatar{
+
+}
+
+.product-profile-user-avatar-img{
+  max-width: 4vw;
+}
+
+.product-profile-user-desciption{
+
+}
+
+.product-description-title{
+  flex:20;
+  /*border: 1px solid black;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 7%;
+  padding-right: 7%;
+  padding-top: 5%;
+}
+
+.product-description-title-name{
+  font-size: 26px;
+}
+
+.product-description-title-price{
+  font-size: 26px;
+}
+
+.product-description-detail{
+  flex:50;
+  /*border: 1px solid black;*/
+  overflow: scroll;
+}
+
+.product-description-buttons{
+  flex:30;
+  /*border: 1px solid black;*/
+  display: flex;
+  justify-content: space-between ;
+  align-items: center;
+}
+
+.product-description-buttons button{
+  background-color: white;
+  border : solid #3498db 1px;
+  border-radius: 15px;
+  outline: 0px;
+  width: 8vw;
+}
+
+.product-description-buttons button:hover{
+  background-color: #3498db;
+  color: white;
+  transition: background-color 1s;
+}
+
+.product-description-buttons-contact{
+  margin-left: 6%;
+}
+
+.product-description-buttons-add{
+  margin-right: 6%;
+}
+
+.product-description-detail p{
+  font-size: 20px;
+  margin: 6%;
+  color: #3498db;
+}

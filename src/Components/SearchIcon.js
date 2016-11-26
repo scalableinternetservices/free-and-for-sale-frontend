@@ -62,7 +62,7 @@ class SearchIcon extends Component {
       <div>
         {this.renderSearchIcon()}
         <ReactCSSTransitionGroup
-          transitionName="example"
+          transitionName="searchIcon"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}
           >

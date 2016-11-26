@@ -152,4 +152,7 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps, null)(UploadProduct);
+
+
+
+export default connect(mapStateToProps)(UploadProduct);

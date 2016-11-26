@@ -13,7 +13,7 @@ class Card extends Component {
 
   render() {
     return (
-        <div className="cardContainer">
+        <div className="cardContainer" onClick={()=>console.log(this.props)}>
           <img className="productImg" style={{flex:40, 'border-top-right-radius': '3%', 'border-top-left-radius': '3%', 'max-width':'100%', height:'auto'}} src={this.props.imgURL} />
           <div style={{'margin-top':'4%', flex:20, 'padding-bottom':'10px', display:'flex', 'flex-direction':'column', 'justify-content':'space-between'}} className="description">
             <div>

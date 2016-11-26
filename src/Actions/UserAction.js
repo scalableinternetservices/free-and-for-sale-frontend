@@ -2,6 +2,7 @@ import axios from 'axios';
 import {serverAddress} from '../config';
 export const REQUEST_SIGNUP = 'REQUEST_SIGNUP';
 export const RECEIVE_SIGNUP = 'RECEIVE_SIGNUP';
+export const LOG_OUT = 'LOG_OUT';
 import { browserHistory } from 'react-router';
 
 
@@ -20,7 +21,7 @@ export function receiveSignup() {
 }
 
 
-export function signup(email, password) {
+export function signup(email, password, callback) {
   return function (dispatch) {
     dispatch(requestSignup());
     axios.post(serverAddress+'api/v1/register_user', {
@@ -32,10 +33,17 @@ export function signup(email, password) {
         sessionStorage.setItem('token', response['data']['data']['json']['auth_token']);
         console.log(sessionStorage.getItem('token'), "=====>");
         dispatch(receiveSignup());
+        callback&&callback();
       })
       .catch(function (error) {
         console.log(error);
       });
 
+  }
+}
+
+export function logOut(){
+  return {
+    type:LOG_OUT
   }
 }

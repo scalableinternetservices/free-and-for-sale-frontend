@@ -76,6 +76,7 @@ export function uploadProduct(product, serverAddress, base64_img, callback){
       dispatch(DidUploadProduct());
       // browserHistory.push('/landingPage');
       callback();
+      dispatch(fetchProducts());
 
     })
     .catch (function(error){
