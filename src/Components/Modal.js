@@ -7,22 +7,11 @@ class Modal extends Component{
     super (props);
   }
 
-  componentWillUpdate(nextProps, nextState)
-  {
-    if (nextProps.showModal)
-    {
-      // document.getElementsByClassName('modal-body')[0].className = "modal-body modal-background"
-        //document.getElementsByClassName('modal-body')[0].parentNode.className += " blurContainer" ;
-       //window.onwheel = (e)=>{e.preventDefault()};
-
-    }
-  }
-
   renderModal(){
     if (this.props.showModal)
     {
       return (
-        <div className="modal-background ">
+        <div className="modal-body modal-background ">
           <div className={"modal-container "+this.props.className}>
             <i onClick={this.props.onModalClose} className="fa fa-times fa-2x modal-closeIcon" aria-hidden="true"></i>
             {this.props.children}

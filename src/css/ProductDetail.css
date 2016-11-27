@@ -136,6 +136,7 @@
 
 .product-description-buttons button:hover{
   background-color: #3498db;
+  border: 0px;
   color: white;
   transition: background-color 1s;
 }
@@ -156,13 +157,14 @@
 
 .Product-outer-modal i{
   font-weight: 10;
+  font-size: 2vw;
   position: absolute!important;
   top:-5%!important;
   right:-2%!important;
   border-radius: 100%;
   background-color: white;
-  width: 5%;
-  height: 11%;
+  width: 3vw;
+  height: 3vw;
   display: flex;
   justify-content: center;
   align-items: center;

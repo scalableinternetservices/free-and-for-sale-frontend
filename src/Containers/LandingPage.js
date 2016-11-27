@@ -132,7 +132,7 @@ class LandingPage extends Component {
             <UploadProduct handleProductModalClose = {this.handleProductModalClose.bind(this)} />
           </ReactCSSTransitionGroup>)
           : "" }
-        <div className={"headerAndProduct " + (this.state.showUploadProductModal ? "headerAndProductBlur" : " ")}>
+        <div className={"headerAndProduct " + (this.state.showUploadProductModal || this.state.showDetailModal ? "headerAndProductBlur" : " ")}>
           <div className={this.state.shrinkBanner ?  "fixed" : ""}>
             <Banner  onLogOutClick = {this.props.signOut} is_signed_in={this.props.user.is_signed_in} onSignUpClick={this.onSignUpClick.bind(this)} className={this.state.shrinkBanner ?  "shrink" : ""} onSearchTermInput = {this.props.onSearchTermInput} />
             <FilterBar  />

@@ -14,7 +14,7 @@ body{
 
 .headerAndProductBlur{
   filter: blur(25px);
-  transition: all 1s;
+  transition: all 1s ease;
 }
 
 .headerAndProduct{
@@ -61,7 +61,8 @@ body{
   top:92%;
   left:60px;
   transition: all 1s;
-  opacity: 1
+  opacity: 1;
+  box-shadow: 2px 2px 8px grey;
 }
 
 
