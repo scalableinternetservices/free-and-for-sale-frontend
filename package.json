@@ -17,6 +17,7 @@
     "react-dom": "^15.3.2",
     "react-dropzone": "^3.7.2",
     "react-fontawesome": "^1.2.0",
+    "react-lazyload": "^2.2.0",
     "react-masonry-component": "^4.2.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",

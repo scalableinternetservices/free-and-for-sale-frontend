@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Masonry from 'react-masonry-component';
 import Card from './Card';
 import '../css/CardsContainer.css';
+import LazyLoad from 'react-lazyload';
 
 
 var masonryOptions = {
@@ -39,16 +40,18 @@ class CardsContainer extends Component {
                 transitionAppearTimeout={1500}
                 transitionLeaveTimeout={1000}
                 >
-                <Card
-                  getClickedProductID = {this.props.getClickedProductID}
-                  onClick = {this.props.handleProductCardClick}
-                  key = {index}
-                  price = {product.price}
-                  productName = {product.name}
-                  description = {product.description}
-                  imgURL = {product.image_url}
-                  productId = {product.id}
-                />
+                <LazyLoad height={150} true >
+                  <Card
+                    getClickedProductID = {this.props.getClickedProductID}
+                    onClick = {this.props.handleProductCardClick}
+                    key = {index}
+                    price = {product.price}
+                    productName = {product.name}
+                    description = {product.description}
+                    imgURL = {product.image_url}
+                    productId = {product.id}
+                  />
+                </LazyLoad>
               </ReactCSSTransitionGroup>
 
             )

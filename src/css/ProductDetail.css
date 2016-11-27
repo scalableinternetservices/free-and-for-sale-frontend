@@ -61,6 +61,7 @@
   width: 100%;
   height: 100%;
   border-radius: 7px;
+  box-shadow: 5px 5px 5px grey;
 }
 
 .product-profile-user{
