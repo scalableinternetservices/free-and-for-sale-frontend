@@ -40,16 +40,19 @@ class CardsContainer extends Component {
                 transitionLeaveTimeout={1000}
                 >
                 <Card
+                  getClickedProductID = {this.props.getClickedProductID}
+                  onClick = {this.props.handleProductCardClick}
                   key = {index}
                   price = {product.price}
                   productName = {product.name}
                   description = {product.description}
                   imgURL = {product.image_url}
+                  productId = {product.id}
                 />
               </ReactCSSTransitionGroup>
 
             )
-        })
+        }.bind(this))
       )
     }
   }

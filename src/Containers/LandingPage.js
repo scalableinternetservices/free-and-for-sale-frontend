@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { Router, Route, Link, browserHistory } from 'react-router'
+import { connect } from 'react-redux';
+
 import Header from '../Components/header';
 import FilterBar from '../Components/FilterBar';
 import Modal from '../Components/Modal';
-
 import CardsContainer from '../Components/CardsContainer';
 import Banner from '../Components/Banner';
-import { connect } from 'react-redux';
-import {fetchProducts, filterProducts} from '../Actions/productsAction';
+import {fetchProducts, filterProducts, clickedProductID} from '../Actions/productsAction';
 import {logOut} from '../Actions/UserAction';
 import SearchBar from '../Components/SearchBar';
 import UploadProduct from './uploadProduct';
 import ProductDetail from '../Components/ProductDetail';
-import '../css/landingPage.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import SignUpModal from '../Components/Auth/SignUpForm';
+import ProductDetailContainer from './ProductDetailContainer';
+import '../css/landingPage.css';
 
 /*
   is_signed_in : bool
@@ -28,7 +29,8 @@ class LandingPage extends Component {
       shrinkBanner : false,
       shrinked:false,
       showUploadProductModal:false,
-      showSignUpModal : false
+      showSignUpModal : false,
+      showDetailModal: false,
     }
   }
 
@@ -40,15 +42,12 @@ class LandingPage extends Component {
 
   handleAddProductClick(){
     // browserHistory.push('/uploadproduct');
-    if (this.props.user.is_signed_in)
-    {
+    if (this.props.user.is_signed_in){
       this.setState({
         showUploadProductModal : true
       })
     }
-
-    else
-    {
+    else{
       this.setState({
         showSignUpModal : true
       })
@@ -58,8 +57,7 @@ class LandingPage extends Component {
   shrinkBanner( ){
     var currentHeight = window.pageYOffset;
     //if scroll down
-    if (currentHeight >= 0)
-    {
+    if (currentHeight >= 0){
       this.setState ({
         shrinkBanner : true
       })
@@ -71,8 +69,7 @@ class LandingPage extends Component {
       })
     }
     //if scroll back to the top
-    if (currentHeight == 0)
-    {
+    if (currentHeight == 0){
       this.setState ({
         shrinkBanner : false,
         shrinked : false
@@ -107,9 +104,22 @@ class LandingPage extends Component {
     })
   }
 
+  handleProductCardClick(){
+    this.setState({
+      showDetailModal : true,
+    })
+  }
+
+  handleProductDetailClose(){
+    this.setState({
+      showDetailModal : false
+    })
+  }
+
   render() {
     return (
       <div>
+        <ProductDetailContainer handleProductDetailClose={this.handleProductDetailClose.bind(this)} showDetailModal={this.state.showDetailModal} />
         <SignUpModal onSucessSignUp={this.onSucessSignUp.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.props.user.is_signed_in ? false : this.state.showSignUpModal} className=""/>
 
         {this.state.showUploadProductModal ?
@@ -128,7 +138,7 @@ class LandingPage extends Component {
             <FilterBar  />
           </div>
 
-          <CardsContainer  className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
+          <CardsContainer getClickedProductID = {this.props.getClickedProductID} handleProductCardClick={this.handleProductCardClick.bind(this)}  className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
           <button onClick={this.handleAddProductClick.bind(this)} className="addProduct"><i className="fa fa-plus" aria-hidden="true"></i></button>
         </div>
       </div>
@@ -149,13 +159,13 @@ function mapDispatchToProps(dispatch){
     onSearchTermInput: (searchTerm) => {
       dispatch(filterProducts(searchTerm))
     },
-
     signOut:()=>{
       dispatch(logOut());
     },
-
+    getClickedProductID:(ProductID)=>{
+      dispatch(clickedProductID(ProductID));
+    },
     dispatch
-
   }
 }
 

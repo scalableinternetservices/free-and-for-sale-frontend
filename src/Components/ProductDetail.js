@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import '../css/ProductDetail.css';
+import Modal from  './Modal';
 
 class ProductDetail extends Component {
   constructor(props){
     super(props);
     this.state = {
-
     }
   }
 
   render(){
     return(
-      <div className="product-modal-background">
+      <Modal onModalClose={this.props.handleProductDetailClose} showModal={this.props.showDetailModal} className="Product-outer-modal">
         <div className="product-modal-container">
 
           <div className="product-close">
@@ -19,7 +19,7 @@ class ProductDetail extends Component {
 
           <div className="product-profile">
             <div className="product-profile-picture">
-              <img src="https://cdn2.macworld.co.uk/cmsdata/reviews/3534761/iPhone_6_MG_1953.jpg"/>
+              <img src={this.props.selectedProduct&&this.props.selectedProduct.image_url}/>
             </div>
             <div className="product-profile-user">
               <div className="product-profile-user-avatar">
@@ -34,12 +34,12 @@ class ProductDetail extends Component {
 
           <div className="product-description">
             <div className="product-description-title">
-              <p className="product-description-title-name">IPhone 6</p>
-              <p className="product-description-title-price">$360</p>
+              <p className="product-description-title-name">{this.props.selectedProduct&&this.props.selectedProduct.name}</p>
+              <p className="product-description-title-price">${this.props.selectedProduct&&this.props.selectedProduct.price}</p>
             </div>
 
             <div className="product-description-detail">
-              <p>Brand new ihpone plus, barely used, in completely new condition.Brand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new conditionBrand new ihpone plus, barely used, in completely new condition</p>
+              <p>{this.props.selectedProduct&&this.props.selectedProduct.description}</p>
             </div>
 
             <div className="product-description-buttons">
@@ -49,7 +49,7 @@ class ProductDetail extends Component {
           </div>
 
         </div>
-      </div>
+      </Modal>
     )
   }
 

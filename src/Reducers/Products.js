@@ -1,7 +1,11 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product} from '../Actions/productsAction';
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product, Clicked_Product_ID} from '../Actions/productsAction';
 
-export default function Products (state = [], action ){
+export default function Products (state = {clickedProductID:-1}, action ){
   switch (action.type) {
+    case Clicked_Product_ID:
+      return Object.assign({}, state, {
+        clickedProductID : action.clickedProductID
+      })
 
     case REQUEST_PRODUCTS:
       return Object.assign({}, state, {
@@ -19,7 +23,6 @@ export default function Products (state = [], action ){
       })
 
     case Will_Upload_Product:
-      debugger;
       return Object.assign({}, state, {
         isUploading: true
       })
@@ -39,11 +42,12 @@ export default function Products (state = [], action ){
         }
       }
 
-        return Object.assign({}, state, {
-              isFetching: false,
-              didInvalidate: false,
-              products: filteredProducts
-              })
+      return Object.assign({}, state, {
+            isFetching: false,
+            didInvalidate: false,
+            products: filteredProducts
+      })
+
     default:
       return state;
   }

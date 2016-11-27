@@ -9,6 +9,7 @@ export const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 export const Will_Upload_Product = 'Will_Upload_Product';
 export const Upload_Product = 'Upload_Product';
 export const Did_Upload_Product = 'Did_Upload_Product';
+export const Clicked_Product_ID = 'Clicked_Product_ID';
 
 
 export function requestProducts() {
@@ -88,5 +89,13 @@ export function uploadProduct(product, serverAddress, base64_img, callback){
 export function DidUploadProduct( ){
   return {
     type : Did_Upload_Product
+  }
+}
+
+//handle product detail
+export function clickedProductID(clickedProductID){
+  return {
+    type : Clicked_Product_ID,
+    clickedProductID : clickedProductID
   }
 }
