@@ -36,7 +36,7 @@ class Banner extends Component {
     {
       return (
         <div className="buttonGroup">
-          <Button handleButtonClick = {this.props.onSignUpClick} buttonName="Sign Up" />
+          <Button handleButtonClick = {this.props.onSignUpClick} className="signinButton" buttonName="Sign Up" />
           <Button handleButtonClick = {this.props.onSignInClick} className="signinButton" buttonName="Sign in"/>
         </div>
       )

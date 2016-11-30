@@ -1,7 +1,7 @@
 //react/components/auth/SignUpForm.js
 var React          = require('react');
 var _              = require('lodash');
-var Functions      = require('../../util/Functions.js');
+var Functions      = require('../../util/Functions.js'); 
 var $              = require('jquery');
 
 

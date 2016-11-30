@@ -1,10 +1,11 @@
 .signupForm-formContainer{
   display: flex;
   flex-direction: column;
-  position: absolute;
+  
   justify-content: space-around;
   height: 80%;
   top:15%;
+
 }
 
 .signupForm-Modal{
@@ -15,8 +16,10 @@
   top:8%;
   border-radius: 8px;
   display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items:center ;
 }
 
 .signupForm-Modal::after{
