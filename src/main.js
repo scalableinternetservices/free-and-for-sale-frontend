@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <Provider store={Store}>
         <Router history={browserHistory}>
-            <Route path="LandingPage" component={LandingPage}/>
+            <Route path="/" component={LandingPage}/>
             <Route path="signin" component={SignInForm}/>
             <Route path="signout" component={SignOutLink}/>
             <Route path="signup" component={SignUpForm}/>
