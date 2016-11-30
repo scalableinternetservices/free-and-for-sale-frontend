@@ -84,6 +84,7 @@ button.addProduct:hover{
 .shrink{
   height: 70px;
   transition: height 1s;
+  box-shadow: 0px 2px 20px grey;
 }
 
 .example-appear {

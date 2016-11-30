@@ -27,6 +27,7 @@ class Banner extends Component {
   }
 
   handleLogout(){
+    this.props.handleProfileButtonGoBackClick();
     this.props.onLogOutClick();
   }
 
@@ -36,7 +37,7 @@ class Banner extends Component {
       return (
         <div className="buttonGroup">
           <Button handleButtonClick = {this.props.onSignUpClick} buttonName="Sign Up" />
-          <Button className="signinButton" buttonName="Sign in"/>
+          <Button handleButtonClick = {this.props.onSignInClick} className="signinButton" buttonName="Sign in"/>
         </div>
       )
     }
@@ -45,8 +46,7 @@ class Banner extends Component {
     {
       return (
         <div className="buttonGroup">
-          <Button className="signinButton" buttonName="Profile"/>
-          <Button className="signinButton" buttonName="My Cart"/>
+          <Button handleButtonClick={this.props.handleProfileButtonClick} className="signinButton" buttonName="Profile"/>
           <Button handleButtonClick={this.handleLogout.bind(this)}  className="signinButton" buttonName="Log Out"/>
         </div>
       )
@@ -58,12 +58,12 @@ class Banner extends Component {
       <div className={this.props.className+ " bannerContainer " }>
         <img className="backgroundImg" src="background1.jpg" />
         <div className="buttons">
-          <SearchIcon searchTerm={this.state.searchTerm} handleInputChange={this.handleInputChange.bind(this)} />
+          {this.props.showProfile? <div><i onClick={this.props.handleProfileButtonGoBackClick} className="fa fa-arrow-circle-o-left fa-3x profile-goback" aria-hidden="true"></i></div> : <SearchIcon searchTerm={this.state.searchTerm} handleInputChange={this.handleInputChange.bind(this)} />}
           {this.renderButtonGroup()}
         </div>
 
         <div className="title">
-          UCLA Marketplace
+          {this.props.titleName}
         </div>
       </div>
     );

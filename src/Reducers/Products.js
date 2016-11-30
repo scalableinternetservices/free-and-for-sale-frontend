@@ -1,10 +1,38 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product, Clicked_Product_ID} from '../Actions/productsAction';
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product, Clicked_Product_ID, WILL_REQUEST_CATEGORY_PRODUCT, DID_REQUEST_CATEGORY_PRODUCT, WILL_GET_BUYING_PRODUCT, DID_GET_BUYING_PRODUCT, WILL_GET_SELLING_PRODUCT, DID_GET_SELLING_PRODUCT, WILL_GET_PROFILE_STATS, DID_GET_PROFILE_STATS} from '../Actions/productsAction';
 
 export default function Products (state = {clickedProductID:-1}, action ){
   switch (action.type) {
     case Clicked_Product_ID:
       return Object.assign({}, state, {
         clickedProductID : action.clickedProductID
+      })
+
+    case WILL_GET_BUYING_PRODUCT:
+      return Object.assign({}, state, {
+        isFetching : true,
+        didInvalidate : false
+      })
+
+    case DID_GET_BUYING_PRODUCT:
+      return Object.assign({}, state, {
+        isFetching:false,
+        didInvalidate:false,
+        products: action.products,
+        initialProducts:action.products
+      })
+
+    case WILL_GET_SELLING_PRODUCT:
+      return Object.assign({}, state, {
+        isFetching : true,
+        didInvalidate : false
+      })
+
+    case DID_GET_SELLING_PRODUCT:
+      return Object.assign({}, state, {
+        isFetching:false,
+        didInvalidate:false,
+        products: action.products,
+        initialProducts:action.products
       })
 
     case REQUEST_PRODUCTS:
@@ -22,6 +50,21 @@ export default function Products (state = {clickedProductID:-1}, action ){
 
       })
 
+    case WILL_REQUEST_CATEGORY_PRODUCT:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+
+
+    case DID_REQUEST_CATEGORY_PRODUCT:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        products: action.products,
+        initialProducts:action.products
+      })
+
     case Will_Upload_Product:
       return Object.assign({}, state, {
         isUploading: true
@@ -30,6 +73,17 @@ export default function Products (state = {clickedProductID:-1}, action ){
     case Did_Upload_Product:
       return Object.assign({}, state, {
         isUploading : false
+      })
+
+    case WILL_GET_PROFILE_STATS:
+      return Object.assign({}, state, {
+        isFetching:true
+      })
+
+    case DID_GET_PROFILE_STATS:
+      return Object.assign({}, state, {
+        isFetching:false,
+        profile_stats:action.profile_stats
       })
 
     case FILTER_PRODUCTS:

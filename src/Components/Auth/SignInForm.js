@@ -1,63 +1,71 @@
-// react/components/auth/SignInForm.js
+//react/components/auth/SignUpForm.js
 var React          = require('react');
-var Functions      = require('../../util/Functions.js');
 var _              = require('lodash');
+var Functions      = require('../../util/Functions.js');
 var $              = require('jquery');
+
+
+import { browserHistory } from 'react-router';
+import {signin} from '../../Actions/UserAction';
+import { connect } from 'react-redux';
+import Modal from '../Modal';
+import '../../css/Auth/signupForm.css';
+
 
 var SignInForm =
   React.createClass({
     _handleInputChange: function(ev) {
       // Get a deep clone of the component's state before the input change.
-
       var nextState = _.cloneDeep(this.state);
 
       //Update the state of the component
       nextState[ev.target.name] = ev.target.value;
 
-      // Update the component's state with the new state
+
       this.setState(nextState);
     },
     getInitialState: function() {
       return {
         email: '',
-        password: ''
+        password: '',
+        password_confirmation: '',
+        name: ''
       };
     },
-    _handleSignInClick: function(e) {
-      console.log(Functions.getMetaContent("csrf-token"));
-      $.ajax({
-        method: "POST",
-        url: "http://35.162.98.109/users/sign_in.json",
-        data: {
-          user: {
-            email: this.state.email,
-            password: this.state.password
-          },
-          authenticity_token: Functions.getMetaContent("csrf-token")
-        }
-      })
-      .done(function(data){
-        //location.reload();
-      }.bind(this));
+
+    _handleRegistrationClick: function(e) {
+      e.preventDefault();
+      const { dispatch } = this.props;
+      dispatch (signin(this.state.email, this.state.password, this.props.onSucessSignIn));
     },
+
     render:function(){
       return (
-          <form>
+        <Modal onModalClose={this.props.onModalClose}  showModal={this.props.showModal}  className="signupForm-Modal">
+          <form className="signupForm-formContainer">
+
               <input type='email'
                 name='email'
                 placeholder='email'
                 value={this.state.email}
-                onChange={this._handleInputChange} />
+                onChange={this._handleInputChange}/>
+
               <input type='password'
                 name='password'
                 placeholder='password'
                 value={this.state.password}
                 onChange={this._handleInputChange} />
-              <button type='button' onClick={this._handleSignInClick} >
-                Login
+
+              <button className="signupForm-formContainer-signupButton" onClick={this._handleRegistrationClick}>
+                Sign In
               </button>
           </form>
+        </Modal>
       )
     }
   });
-module.exports = SignInForm;
+
+
+
+
+export default connect(null, null)(SignInForm);

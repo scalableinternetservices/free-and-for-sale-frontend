@@ -1,4 +1,4 @@
-import { REQUEST_SIGNUP, RECEIVE_SIGNUP, LOG_OUT} from '../Actions/UserAction';
+import { REQUEST_SIGNUP, RECEIVE_SIGNUP, LOG_OUT, DID_SIGNIN, WILL_SIGNIN} from '../Actions/UserAction';
 import { browserHistory } from 'react-router';
 
 export default function Users (state = {is_signed_in : sessionStorage.getItem('token')}, action){
@@ -10,6 +10,7 @@ export default function Users (state = {is_signed_in : sessionStorage.getItem('t
       })
 
     case RECEIVE_SIGNUP:
+      sessionStorage.setItem('email', action.email);
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
@@ -20,6 +21,20 @@ export default function Users (state = {is_signed_in : sessionStorage.getItem('t
       sessionStorage.setItem('token', '')
       return Object.assign({}, state, {
         is_signed_in : sessionStorage.getItem('token')
+      })
+
+    case WILL_SIGNIN:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+
+    case DID_SIGNIN:
+      sessionStorage.setItem('email', action.email);
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        is_signed_in : true
       })
 
     default:

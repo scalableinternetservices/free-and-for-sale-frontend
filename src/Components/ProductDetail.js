@@ -9,6 +9,11 @@ class ProductDetail extends Component {
     }
   }
 
+  addToShoppingCart(){
+    //alert(this.props.selectedProduct.id);
+    this.props.addToShoppingCart(this.props.selectedProduct.id);
+  }
+
   render(){
     return(
       <Modal onModalClose={this.props.handleProductDetailClose} showModal={this.props.showDetailModal} className="Product-outer-modal">
@@ -44,7 +49,7 @@ class ProductDetail extends Component {
 
             <div className="product-description-buttons">
               <button className="product-description-buttons-contact">Contact</button>
-              <button className="product-description-buttons-add">Add to Cart</button>
+              <button onClick={this.addToShoppingCart.bind(this)} className="product-description-buttons-add">Add to Cart</button>
             </div>
           </div>
 

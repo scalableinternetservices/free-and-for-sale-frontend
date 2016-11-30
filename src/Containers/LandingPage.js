@@ -14,7 +14,9 @@ import UploadProduct from './uploadProduct';
 import ProductDetail from '../Components/ProductDetail';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import SignUpModal from '../Components/Auth/SignUpForm';
+import SignInModal from '../Components/Auth/SignInForm';
 import ProductDetailContainer from './ProductDetailContainer';
+import Profile from '../Components/Profile';
 import '../css/landingPage.css';
 
 /*
@@ -30,7 +32,9 @@ class LandingPage extends Component {
       shrinked:false,
       showUploadProductModal:false,
       showSignUpModal : false,
+      showSignInModal : false,
       showDetailModal: false,
+      showProfile : false
     }
   }
 
@@ -63,6 +67,8 @@ class LandingPage extends Component {
       })
       //collapse banner by adding a css class "collapse" to minimize the height
       !this.state.shrinked && document.getElementsByClassName('title')[0] && (document.getElementsByClassName('title')[0].className += ' collapse');
+      //collapse banner by adding a css class "collapse" to minimize the height
+      !this.state.shrinked && document.getElementsByClassName('profile-container')[0] && (document.getElementsByClassName('profile-container')[0].className += ' moveDown');
       //set the flag shrinked to indicate the banner is shrinked.
       this.setState({
         shrinked:true
@@ -77,6 +83,7 @@ class LandingPage extends Component {
 
     //expand the banner by remove the "collapse" class
       document.getElementsByClassName('title')[0] && (document.getElementsByClassName('title')[0].classList.remove('collapse'));
+      document.getElementsByClassName('profile-container')[0] && (document.getElementsByClassName('profile-container')[0].classList.remove ('moveDown'));
     }
   }
 
@@ -88,7 +95,8 @@ class LandingPage extends Component {
 
   onModalClose(){
     this.setState({
-      showSignUpModal : false
+      showSignUpModal : false,
+      showSignInModal : false
     })
   }
 
@@ -104,6 +112,18 @@ class LandingPage extends Component {
     })
   }
 
+  onSignInClick(){
+    this.setState({
+      showSignInModal : true
+    })
+  }
+
+  onSucessSignIn(){
+    this.setState({
+      showSignInModal:false
+    })
+  }
+
   handleProductCardClick(){
     this.setState({
       showDetailModal : true,
@@ -116,12 +136,36 @@ class LandingPage extends Component {
     })
   }
 
+  handleProfileButtonClick(){
+    this.setState({
+      showProfile : true
+    })
+  }
+
+  handleProfileButtonGoBackClick(){
+    this.setState({
+      showProfile : false
+    })
+    this.props.dispatch(fetchProducts());
+  }
+
+  renderProfile(){
+    if (this.state.showProfile){
+      return (
+        <Profile />
+      )
+    }
+    else{
+      return <div></div>
+    }
+  }
+
   render() {
     return (
       <div>
         <ProductDetailContainer handleProductDetailClose={this.handleProductDetailClose.bind(this)} showDetailModal={this.state.showDetailModal} />
-        <SignUpModal onSucessSignUp={this.onSucessSignUp.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.props.user.is_signed_in ? false : this.state.showSignUpModal} className=""/>
-
+        <SignUpModal onSucessSignUp={this.onSucessSignUp.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignUpModal} className=""/>
+        <SignInModal onSucessSignIn={this.onSucessSignIn.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignInModal} className=""/>
         {this.state.showUploadProductModal ?
           (<ReactCSSTransitionGroup
             transitionName="example"
@@ -134,9 +178,23 @@ class LandingPage extends Component {
           : "" }
         <div className={"headerAndProduct " + (this.state.showUploadProductModal || this.state.showDetailModal ? "headerAndProductBlur" : " ")}>
           <div className={this.state.shrinkBanner ?  "fixed" : ""}>
-            <Banner  onLogOutClick = {this.props.signOut} is_signed_in={this.props.user.is_signed_in} onSignUpClick={this.onSignUpClick.bind(this)} className={this.state.shrinkBanner ?  "shrink" : ""} onSearchTermInput = {this.props.onSearchTermInput} />
-            <FilterBar  />
+            <Banner
+                    handleProfileButtonGoBackClick = {this.handleProfileButtonGoBackClick.bind(this)}
+                    showProfile = {this.state.showProfile}
+                    handleProfileButtonClick={this.handleProfileButtonClick.bind(this)}
+                    onLogOutClick = {this.props.signOut}
+                    is_signed_in={this.props.user.is_signed_in}
+                    onSignUpClick={this.onSignUpClick.bind(this)}
+                    titleName={this.state.showProfile? 'My Stuff' : 'UCLA Marketplace'}
+                    onSignInClick={this.onSignInClick.bind(this)}
+                    className={this.state.shrinkBanner || this.state.showProfile ?  "shrink" : ""}
+                    onSearchTermInput = {this.props.onSearchTermInput} />
+
+            {this.state.showProfile?  <div></div>:<FilterBar  />}
+
           </div>
+
+          {this.renderProfile()}
 
           <CardsContainer getClickedProductID = {this.props.getClickedProductID} handleProductCardClick={this.handleProductCardClick.bind(this)}  className={this.state.shrinkBanner? "moveDown" : ""}  products = {this.props.products} />
           <button onClick={this.handleAddProductClick.bind(this)} className="addProduct"><i className="fa fa-plus" aria-hidden="true"></i></button>

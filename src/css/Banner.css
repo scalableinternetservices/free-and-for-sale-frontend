@@ -65,3 +65,12 @@
   text-shadow: 2px 2px 5px grey;
 
 }
+
+.profile-goback{
+  color: white;
+  margin-left: 150%;
+}
+
+.profile-goback:hover{
+    cursor: pointer;
+}

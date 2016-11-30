@@ -43,6 +43,14 @@ class UploadProduct extends Component {
     })
   }
 
+  handleCategoryInputChange(ev)
+  {
+    this.setState({
+      Product : Object.assign({}, this.state.Product, {category : ev.target.value})
+    })
+  }
+
+
   handlePriceInputChange(ev)
   {
     this.setState({
@@ -121,10 +129,25 @@ class UploadProduct extends Component {
                className="input"
                type='string'
                name='description'
-               placeholder='Typr or select tags of your listing'
+               placeholder='Type a description of your product'
                value = {this.state.Product.description}
                onChange = {this.handleDescriptionInputChange.bind(this)}
               />
+
+              <select
+                className="input uploadCategorySelector"
+                type='string'
+                name='category'
+                value = {this.state.Product.category}
+                onChange = {this.handleCategoryInputChange.bind(this)}>
+                <option value="" disabled selected>Choose a category of your product</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Books">Books</option>
+                <option value="Clothes">Clothes</option>
+                <option value="Others">Others</option>
+              </select>
+              
               <input
                 className="input"
                 type='number'
