@@ -40,7 +40,7 @@ class CardsContainer extends Component {
                 transitionAppearTimeout={1500}
                 transitionLeaveTimeout={1000}
                 >
-                <LazyLoad height={150} true >
+                <LazyLoad height={80} true >
                   <Card
                     getClickedProductID = {this.props.getClickedProductID}
                     onClick = {this.props.handleProductCardClick}

@@ -25,6 +25,7 @@ class FilterBar extends Component {
   }
 
   handleFilterClick(e){
+    this.props.setCurrentFilterID(this.state.selectedFilterID);
     this.removeOldFilterActiveClass(this.state.selectedFilterID);
     this.setState({
       selectedFilterID : e.target.getAttribute('id')

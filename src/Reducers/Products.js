@@ -43,9 +43,10 @@ export default function Products (state = {clickedProductID:-1}, action ){
 
     case RECEIVE_PRODUCTS:
       return Object.assign({}, state, {
+        page: state.page ? (state.page+15) : 15 ,
         isFetching: false,
         didInvalidate: false,
-        products: action.products,
+        products: action.products.slice(0, state.page?state.page+15 : 15),
         initialProducts:action.products
 
       })

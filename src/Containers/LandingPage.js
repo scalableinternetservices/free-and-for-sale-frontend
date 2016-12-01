@@ -34,7 +34,8 @@ class LandingPage extends Component {
       showSignUpModal : false,
       showSignInModal : false,
       showDetailModal: false,
-      showProfile : false
+      showProfile : false,
+      currentFilterId : 0,
     }
   }
 
@@ -46,6 +47,7 @@ class LandingPage extends Component {
 
   handleAddProductClick(){
     // browserHistory.push('/uploadproduct');
+
     if (this.props.user.is_signed_in){
       this.setState({
         showUploadProductModal : true
@@ -84,6 +86,25 @@ class LandingPage extends Component {
     //expand the banner by remove the "collapse" class
       document.getElementsByClassName('title')[0] && (document.getElementsByClassName('title')[0].classList.remove('collapse'));
       document.getElementsByClassName('profile-container')[0] && (document.getElementsByClassName('profile-container')[0].classList.remove ('moveDown'));
+    }
+
+    this.handleReachTheBottomOfPage();
+
+  }
+
+  setCurrentFilterID(currentFilterId){
+    this.setState({
+      currentFilterId
+    })
+  }
+
+  handleReachTheBottomOfPage(){
+    if (!this.state.showProfile && this.state.currentFilterId == 0){
+      var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+      var scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+      if ((scrollTop + window.innerHeight) == scrollHeight){
+          this.props.dispatch(fetchProducts());
+        }
     }
   }
 
@@ -190,7 +211,7 @@ class LandingPage extends Component {
                     className={this.state.shrinkBanner || this.state.showProfile ?  "shrink" : ""}
                     onSearchTermInput = {this.props.onSearchTermInput} />
 
-            {this.state.showProfile?  <div></div>:<FilterBar  />}
+                  {this.state.showProfile?  <div></div>:<FilterBar setCurrentFilterID = {this.setCurrentFilterID.bind(this)}  />}
 
           </div>
 
