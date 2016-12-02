@@ -5,6 +5,7 @@ export const RECEIVE_SIGNUP = 'RECEIVE_SIGNUP';
 export const DID_SIGNIN = 'DID_SIGNIN';
 export const WILL_SIGNIN = 'WILL_SIGNIN';
 export const LOG_OUT = 'LOG_OUT';
+export const POST_PHONE_NUMBER = 'POST_PHONE_NUMBER';
 import { browserHistory } from 'react-router';
 import { show_alert_message } from './AlertAction';
 
@@ -24,6 +25,14 @@ export function receiveSignup(email) {
   }
 }
 
+export function post_phone_number(phoneNumber){
+  return function (dispatch){
+    axios.post('https://free-in-for-sale-messanger.herokuapp.com/api/message', {
+      number : phoneNumber,
+      token : sessionStorage.getItem('token')
+    })
+  }
+}
 
 export function signup(email, password, callback) {
   return function (dispatch) {

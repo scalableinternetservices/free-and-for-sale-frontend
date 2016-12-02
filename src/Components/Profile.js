@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {get_buying_product, get_selling_product, get_profile_stats} from '../Actions/productsAction';
+import {show_alert_message, close_alert} from '../Actions/AlertAction';
+import {post_phone_number} from '../Actions/UserAction';
 
 import '../css/Profile.css';
 
@@ -40,13 +42,21 @@ class Profile extends Component {
     })
   }
 
+  handlePenClick(){
+    this.props.dispatch(show_alert_message('warm', 'Congrats! You have sucessfully add this item to your shopping cart.'));
+  }
+
+  handleAlertClose(){
+    this.props.dispatch(close_alert());
+  }
+
   render(){
     return(
       <div className="profile-container">
         <div className="profile-userInfo">
           <div className="profile-userInfo-nameAndEmailAndIcon">
             <div className="profile-userInfo-nameAndEmailAndIcon-icons">
-              <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
+              <i onClick={this.handlePenClick.bind(this)} handleCloseIconClick={this.handleAlertClose} className="fa fa-pencil fa-2x" aria-hidden="true"></i>
               <i className="fa fa-cog fa-2x" aria-hidden="true"></i>
               <i className="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
             </div>
@@ -84,16 +94,6 @@ class Profile extends Component {
   }
 }
 
-// function mapDispatchToProps(dispatch){
-//   return {
-//     onBuyingIconClick:()=>{
-//       dispatch(get_buying_product());
-//     },
-//     onSellingIconCLick:()=>{
-//       dispatch(get_selling_product());
-//     }
-//   }
-// }
 
 function mapStateToProps(state){
   return {

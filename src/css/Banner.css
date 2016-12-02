@@ -7,7 +7,7 @@
   height: 200px;
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: white;
   position: relative;
   transition: height 1s;
   overflow: hidden;
@@ -19,6 +19,8 @@
   position: absolute;
   z-index: -100;
   opacity: 0.9;
+  top:-250%;
+
 }
 
 .buttons{

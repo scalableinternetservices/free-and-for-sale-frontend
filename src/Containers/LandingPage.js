@@ -8,6 +8,7 @@ import FilterBar from '../Components/FilterBar';
 import Modal from '../Components/Modal';
 import CardsContainer from '../Components/CardsContainer';
 import Banner from '../Components/Banner';
+import {post_phone_number} from '../Actions/UserAction';
 import {fetchProducts, filterProducts, clickedProductID} from '../Actions/productsAction';
 import {close_alert} from '../Actions/AlertAction';
 import {logOut} from '../Actions/UserAction';
@@ -192,7 +193,7 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        <Alert type={this.props.alert.messageType} content={this.props.alert.messageContent} shouldOpen={this.props.alert.shouldShowAlert} handleCloseIconClick={this.handleCloseIconClick.bind(this)}/>
+        <Alert postPhoneNumber = {this.props.postPhoneNumber} type={this.props.alert.messageType} content={this.props.alert.messageContent} shouldOpen={this.props.alert.shouldShowAlert} handleCloseIconClick={this.handleCloseIconClick.bind(this)}/>
         <ProductDetailContainer handleProductDetailClose={this.handleProductDetailClose.bind(this)} showDetailModal={this.state.showDetailModal} />
         <SignUpModal onSucessSignUp={this.onSucessSignUp.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignUpModal} className=""/>
         <SignInModal onSucessSignIn={this.onSucessSignIn.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignInModal} className="signInModal"/>
@@ -253,6 +254,9 @@ function mapDispatchToProps(dispatch){
     },
     getClickedProductID:(ProductID)=>{
       dispatch(clickedProductID(ProductID));
+    },
+    postPhoneNumber:(phoneNumber)=>{
+      dispatch(post_phone_number(phoneNumber));
     },
     dispatch
   }
