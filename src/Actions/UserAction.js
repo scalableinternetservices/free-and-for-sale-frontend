@@ -6,6 +6,7 @@ export const DID_SIGNIN = 'DID_SIGNIN';
 export const WILL_SIGNIN = 'WILL_SIGNIN';
 export const LOG_OUT = 'LOG_OUT';
 import { browserHistory } from 'react-router';
+import { show_alert_message } from './AlertAction';
 
 
 
@@ -36,18 +37,22 @@ export function signup(email, password, callback) {
         sessionStorage.setItem('token', response['data']['data']['json']['auth_token']);
         console.log(sessionStorage.getItem('token'), "=====>");
         dispatch(receiveSignup(email));
+        dispatch(show_alert_message('success', 'Congrats! You are sucessfully signed up.'))
         callback&&callback();
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(function (error, response) {
+        dispatch(show_alert_message('error', error.response.data.errors[0]));
       });
 
   }
 }
 
 export function logOut(){
-  return {
-    type:LOG_OUT
+  return function (dispatch){
+    dispatch(show_alert_message('success', 'Congrats! You are sucessfully logged out.'));
+    dispatch({
+      type:LOG_OUT
+    });
   }
 }
 
@@ -64,10 +69,11 @@ export function signin(email, password, callback){
         sessionStorage.setItem('token', response['data']['data']['json']['auth_token']);
         console.log(sessionStorage.getItem('token'), "=====>");
         dispatch(did_signin(email));
+        dispatch(show_alert_message('success', 'Congrats! You are sucessfully signed in.'))
         callback&&callback();
       })
       .catch(function (error) {
-        console.log(error);
+        dispatch(show_alert_message('error', error.response.data.errors));
       });
 
   }

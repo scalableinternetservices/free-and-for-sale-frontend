@@ -1,4 +1,4 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product, Clicked_Product_ID, WILL_REQUEST_CATEGORY_PRODUCT, DID_REQUEST_CATEGORY_PRODUCT, WILL_GET_BUYING_PRODUCT, DID_GET_BUYING_PRODUCT, WILL_GET_SELLING_PRODUCT, DID_GET_SELLING_PRODUCT, WILL_GET_PROFILE_STATS, DID_GET_PROFILE_STATS} from '../Actions/productsAction';
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, FILTER_PRODUCTS, Will_Upload_Product, Did_Upload_Product, Clicked_Product_ID, WILL_REQUEST_CATEGORY_PRODUCT, DID_REQUEST_CATEGORY_PRODUCT, WILL_GET_BUYING_PRODUCT, DID_GET_BUYING_PRODUCT, WILL_GET_SELLING_PRODUCT, DID_GET_SELLING_PRODUCT, WILL_GET_PROFILE_STATS, DID_GET_PROFILE_STATS, ERROR_UPLOAD_PRODUCT} from '../Actions/productsAction';
 
 export default function Products (state = {clickedProductID:-1}, action ){
   switch (action.type) {
@@ -74,6 +74,11 @@ export default function Products (state = {clickedProductID:-1}, action ){
     case Did_Upload_Product:
       return Object.assign({}, state, {
         isUploading : false
+      })
+
+    case ERROR_UPLOAD_PRODUCT:
+      return Object.assign({}, state, {
+        isUploading:false
       })
 
     case WILL_GET_PROFILE_STATS:

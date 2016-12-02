@@ -22,7 +22,9 @@ body{
 }
 
 
-
+.signInModal{
+  right: 3%!important;
+}
 
 .moveDown{
   padding-top: 120px;

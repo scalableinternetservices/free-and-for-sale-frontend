@@ -1,7 +1,6 @@
 .signupForm-formContainer{
   display: flex;
   flex-direction: column;
-  
   justify-content: space-around;
   height: 80%;
   top:15%;

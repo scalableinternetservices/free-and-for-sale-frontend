@@ -1,7 +1,7 @@
 //react/components/auth/SignUpForm.js
 var React          = require('react');
 var _              = require('lodash');
-var Functions      = require('../../util/Functions.js'); 
+var Functions      = require('../../util/Functions.js');
 var $              = require('jquery');
 
 
@@ -43,6 +43,11 @@ var SignUpForm =
       return (
         <Modal onModalClose={this.props.onModalClose}  showModal={this.props.showModal}  className="signupForm-Modal">
           <form className="signupForm-formContainer">
+
+              <input type='name'
+                name='name'
+                placeholder='name'
+                />
 
               <input type='email'
                 name='email'

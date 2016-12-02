@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Router, Route, Link, browserHistory } from 'react-router'
 import { connect } from 'react-redux';
 
+import Alert from '../Components/Alert';
 import Header from '../Components/header';
 import FilterBar from '../Components/FilterBar';
 import Modal from '../Components/Modal';
 import CardsContainer from '../Components/CardsContainer';
 import Banner from '../Components/Banner';
 import {fetchProducts, filterProducts, clickedProductID} from '../Actions/productsAction';
+import {close_alert} from '../Actions/AlertAction';
 import {logOut} from '../Actions/UserAction';
 import SearchBar from '../Components/SearchBar';
 import UploadProduct from './uploadProduct';
@@ -99,6 +101,8 @@ class LandingPage extends Component {
   }
 
   handleReachTheBottomOfPage(){
+    //load next 20 produxts only if we are in the landing page
+    //and in the featured category.
     if (!this.state.showProfile && this.state.currentFilterId == 0){
       var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
       var scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
@@ -181,12 +185,17 @@ class LandingPage extends Component {
     }
   }
 
+  handleCloseIconClick(){
+    this.props.dispatch(close_alert());
+  }
+
   render() {
     return (
       <div>
+        <Alert type={this.props.alert.messageType} content={this.props.alert.messageContent} shouldOpen={this.props.alert.shouldShowAlert} handleCloseIconClick={this.handleCloseIconClick.bind(this)}/>
         <ProductDetailContainer handleProductDetailClose={this.handleProductDetailClose.bind(this)} showDetailModal={this.state.showDetailModal} />
         <SignUpModal onSucessSignUp={this.onSucessSignUp.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignUpModal} className=""/>
-        <SignInModal onSucessSignIn={this.onSucessSignIn.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignInModal} className=""/>
+        <SignInModal onSucessSignIn={this.onSucessSignIn.bind(this)} onModalClose={this.onModalClose.bind(this)}  showModal={this.state.showSignInModal} className="signInModal"/>
         {this.state.showUploadProductModal ?
           (<ReactCSSTransitionGroup
             transitionName="example"
@@ -229,7 +238,8 @@ class LandingPage extends Component {
 function mapStateToProps(state) {
    return {
      products : state.Products.products,
-     user : state.Users
+     user : state.Users,
+     alert: state.Alert
    }
 }
 

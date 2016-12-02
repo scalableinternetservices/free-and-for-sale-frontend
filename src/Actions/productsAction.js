@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {serverAddress} from '../config';
 import { browserHistory } from 'react-router';
+import { show_alert_message } from './AlertAction';
 import $ from 'jquery';
 
 export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
@@ -9,6 +10,7 @@ export const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 export const Will_Upload_Product = 'Will_Upload_Product';
 export const Upload_Product = 'Upload_Product';
 export const Did_Upload_Product = 'Did_Upload_Product';
+export const ERROR_UPLOAD_PRODUCT = 'ERROR_UPLOAD_PRODUCT';
 export const Clicked_Product_ID = 'Clicked_Product_ID';
 export const WILL_REQUEST_CATEGORY_PRODUCT = 'WILL_REQUEST_CATEGORY_PRODUCT';
 export const REQUEST_CATEGORY_PRODUCT = 'REQUEST_CATEGORY_PRODUCT';
@@ -91,11 +93,14 @@ export function uploadProduct(product, serverAddress, base64_img, callback){
       dispatch(DidUploadProduct());
       // browserHistory.push('/landingPage');
       callback();
+      dispatch(show_alert_message('success', 'Congrats! You have successfully uploaded one item'));
       dispatch(fetchProducts());
 
     })
     .catch (function(error){
-      console.log("error uploading the product error:", error);
+      //debugger;
+      dispatch(show_alert_message('error', JSON.parse(error.responseText).errors[0]));
+      dispatch(error_upload_product());
     }.bind(this));
   }
 }
@@ -103,6 +108,12 @@ export function uploadProduct(product, serverAddress, base64_img, callback){
 export function DidUploadProduct( ){
   return {
     type : Did_Upload_Product
+  }
+}
+
+export function error_upload_product(){
+  return {
+    type : ERROR_UPLOAD_PRODUCT
   }
 }
 
@@ -155,7 +166,7 @@ export function add_to_shopping_cart(product_id) {
           headers: {"Authorization" : "Bearer " +  sessionStorage.getItem('token')},
         })
         .then((response)=>{
-          alert(response);
+          dispatch(show_alert_message('success', 'Congrats! You have sucessfully add this item to your shopping cart.'))
         })
   }
 }

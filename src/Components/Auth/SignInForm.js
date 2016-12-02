@@ -41,7 +41,7 @@ var SignInForm =
 
     render:function(){
       return (
-        <Modal onModalClose={this.props.onModalClose}  showModal={this.props.showModal}  className="signupForm-Modal">
+        <Modal onModalClose={this.props.onModalClose}  showModal={this.props.showModal}  className={"signupForm-Modal "+this.props.className}>
           <form className="signupForm-formContainer">
 
               <input type='email'
