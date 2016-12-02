@@ -8,6 +8,7 @@ export const LOG_OUT = 'LOG_OUT';
 export const POST_PHONE_NUMBER = 'POST_PHONE_NUMBER';
 import { browserHistory } from 'react-router';
 import { show_alert_message } from './AlertAction';
+import {get_selling_product} from './productsAction';
 
 
 
@@ -30,6 +31,13 @@ export function post_phone_number(phoneNumber){
     axios.post('https://free-in-for-sale-messanger.herokuapp.com/api/message', {
       number : phoneNumber,
       token : sessionStorage.getItem('token')
+    })
+    .then(function(response){
+      dispatch(get_selling_product());
+      console.log(response);
+    })
+    .catch(function(error){
+      console.log(error);
     })
   }
 }
